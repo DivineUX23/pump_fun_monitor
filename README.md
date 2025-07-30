@@ -10,6 +10,12 @@ A real-time Rust-based WebSocket service that monitors the Solana blockchain for
 
 Try connecting to the live service to see real-time pump.fun token creation events!
 
+## 📚 Documentation
+
+- **[API Reference](API.md)** - Complete WebSocket API documentation and event schemas
+- **[Examples](EXAMPLES.md)** - Code examples, deployment guides, and integration patterns
+- **[Technical Documentation](DOCUMENTATION.md)** - Architecture details, data models, and implementation guide
+
 ## Features
 
 - 🔗 **Real-time Solana RPC monitoring** via WebSocket connection
