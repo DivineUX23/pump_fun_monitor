@@ -2,6 +2,14 @@
 
 A real-time Rust-based WebSocket service that monitors the Solana blockchain for pump.fun token creation events and streams them to connected clients.
 
+## 🚀 Live Demo
+
+**Test the service live on Render:**
+- **WebSocket URL:** `wss://pump-fun-monitor-latest.onrender.com`
+- **Test with:** Any WebSocket client or the examples below
+
+Try connecting to the live service to see real-time pump.fun token creation events!
+
 ## Features
 
 - 🔗 **Real-time Solana RPC monitoring** via WebSocket connection
@@ -87,6 +95,7 @@ cargo run --release
 
 Connect to the WebSocket server to receive real-time token creation events:
 
+#### Local Development
 ```javascript
 const ws = new WebSocket('ws://localhost:8080');
 
@@ -106,6 +115,46 @@ ws.onmessage = (event) => {
     const tokenEvent = JSON.parse(event.data);
     console.log('New token created:', tokenEvent);
 };
+```
+
+#### Live Production Service
+```javascript
+const ws = new WebSocket('wss://pump-fun-monitor-latest.onrender.com');
+
+ws.onopen = () => {
+    console.log('Connected to live pump.fun monitor!');
+    // Optional: Set up filtering to only receive specific tokens
+    const filterMessage = {
+        action: "setFilter",
+        filter: {
+            symbol: "DOGE",           // Only DOGE tokens
+            nameContains: "moon"      // Tokens with "moon" in the name
+        }
+    };
+    ws.send(JSON.stringify(filterMessage));
+};
+
+ws.onmessage = (event) => {
+    const tokenEvent = JSON.parse(event.data);
+    console.log('New token created:', tokenEvent);
+};
+
+ws.onerror = (error) => {
+    console.error('WebSocket error:', error);
+};
+
+ws.onclose = (event) => {
+    console.log('Connection closed:', event.code, event.reason);
+};
+```
+
+#### Testing with curl (Health Check)
+```bash
+# Test if the service is running
+curl -I https://pump-fun-monitor-latest.onrender.com
+
+# Note: The service is primarily a WebSocket server, so HTTP requests
+# will not return data, but a successful connection indicates the service is running
 ```
 
 ### Client-Side Filtering
@@ -338,14 +387,4 @@ ERROR WebSocket read error: IO error: An existing connection was forcibly closed
 - Monitor memory usage with high client counts
 - Consider horizontal scaling for high throughput
 
-## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
