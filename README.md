@@ -38,8 +38,7 @@ Try connecting to the live service to see real-time pump.fun token creation even
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd solana
+git clone https://github.com/DivineUX23/pump_fun_monitor.git
 ```
 
 2. Install dependencies:
